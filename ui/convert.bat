@@ -1,1 +1,1 @@
-pyuic5 -x mainWindow.ui -o ../windows/mainWindow.py
+pyuic5 -x mainWindow.ui -o ../widgets/mainWindow.py

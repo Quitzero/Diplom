@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="images">
+    <file>maximize_black.png</file>
+    <file>maximize_white.png</file>
+    <file>minimize_balck.png</file>
+    <file>minimize_white.png</file>
+  </qresource>
+</RCC>

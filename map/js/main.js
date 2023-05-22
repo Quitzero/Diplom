@@ -35,7 +35,6 @@ map.addLayer(drawnFeatures);
 var options = {
     position: 'topleft',
     draw: {
-        polygon: false,
         marker: false,
         circle: false,
         polyline: false,
@@ -50,7 +49,7 @@ map.addControl(drawControl);
 
 
 //-----------------------| Функционал панели инструментов |----------------------------------------------
-// Создаение объекта QWebChannel и функции передающей данные в main.py 
+// Создаение объекта QWebChannel и функции передающей данные в app.py 
 var backend = null;
 function showCoords(coords) {
     new QWebChannel(qt.webChannelTransport, function(channel) {
@@ -59,35 +58,14 @@ function showCoords(coords) {
     });
 }
 
-function deleteCoords() {
-    new QWebChannel(qt.webChannelTransport, function(channel) {
-        backend = channel.objects.backend;
-        backend.delRef();
-    });
-}
-
-function takeCoords() {
-    new QWebChannel(qt.webChannelTransport, function (channel) {
-        backend = channel.objects.backend;
-        backend.takeRef(function(retVal) {
-          console.error(JSON.stringify(retVal));
-        })
-      });
-}
-
 var poly = []
 
 function addPoly(a, b, c, d) {
     poly.push(L.polygon([a, b, c, d]))
 }
 
-function renderPoly(e, index) {
-    if (e == true) {
-        poly[index].addTo(map);
-      } else {
-        poly[index].remove(map)
-        poly.slice(index, 1)
-      }
+function renderPoly(index) {
+    poly[index].addTo(map);
 }
 
 function clear() {
@@ -96,7 +74,13 @@ function clear() {
         poly.slice(i, 1)
     }
     poly = []
+}
 
+
+function redraw(p){
+    var polygon = drawnFeatures.getLayers()[0];
+    polygon.setLatLngs(p);
+    drawnFeatures.redraw;
 }
 
 // Вызов функции showCoords при создании объекта и его добавление в FeatureGroup
@@ -108,6 +92,7 @@ map.on('draw:created', function (e){
     drawnFeatures.addLayer(layer);
     showCoords(layer.getLatLngs())
 });
+    
 
 // Запись координат в консоль при изменении объекта
 map.on('draw:edited', function (e) {

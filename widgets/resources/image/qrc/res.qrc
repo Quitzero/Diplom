@@ -1,0 +1,9 @@
+<RCC>
+  <qresource prefix="images">
+    <file>minus_black.png</file>
+    <file>minus_white.png</file>
+    <file>close_black.png</file>
+    <file>background2.jpg</file>
+    <file>close_white.png</file>
+  </qresource>
+</RCC>
